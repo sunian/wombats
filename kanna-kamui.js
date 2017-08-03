@@ -4,6 +4,8 @@
     if (persist == null) persist = {};
     persist.arena = prettyArena(state.arena);
     persist.myself = getMyState(state.arena);
+    var faceX = faceX(persist.myself.contents.orientation);
+    var faceY = faceY(persist.myself.contents.orientation);
     const turnDirections = ['right', 'left', 'about-face'];
     const turnDirection = turnDirections[Math.floor(Math.random() * 3)];
 
@@ -24,6 +26,18 @@
         state: persist
     };
 });
+
+var faceX = (orientation) => {
+    if (orientation == "w") return -1;
+    if (orientation == "e") return 1;
+    return 0;
+}
+
+var faceY = (orientation) => {
+    if (orientation == "n") return -1;
+    if (orientation == "s") return 1;
+    return 0;
+}
 
 var getMyState = (grid) => {
     var row = Math.floor(grid.length / 2);
