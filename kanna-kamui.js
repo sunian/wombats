@@ -1,5 +1,9 @@
 ((state, timeLeftFn) => {
-    let persist = state["saved-state"];
+    var persist = state["saved-state"];
+    state["saved-state"] = null;
+    if (persist == null) persist = {};
+    persist.arena = prettyArena(state.arena);
+    persist.myself = getMyState(state.arena);
     const turnDirections = ['right', 'left', 'about-face'];
     const turnDirection = turnDirections[Math.floor(Math.random() * 3)];
 
@@ -20,3 +24,29 @@
         state: persist
     };
 });
+
+var getMyState = (grid) => {
+    var row = Math.floor(grid.length / 2);
+    var col = Math.floor(grid[row].length / 2);
+    return grid[row][col];
+}
+
+var prettyArena = (grid) => {
+    var rows = [];
+    for (var i = 0; i < grid.length; i++) {
+        rows[i] = "|";
+        for (var j = 0; j < grid[i].length; j++) {
+            rows[i] += wrapWhiteSpace(grid[i][j].contents.type) + "|";
+        }
+    }
+    return rows;
+}
+
+var wrapWhiteSpace = (s) => {
+    if (s == null) s = "";
+    if (s.length % 2 > 0) s += " ";
+    while (s.length < 12) {
+        s = " " + s + " ";
+    }
+    return s;
+}
