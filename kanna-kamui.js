@@ -1,5 +1,5 @@
 ((state, timeLeftFn) => {
-    var persist = state["saved-state"];
+    let persist = state["saved-state"];
     const turnDirections = ['right', 'left', 'about-face'];
     const turnDirection = turnDirections[Math.floor(Math.random() * 3)];
 
