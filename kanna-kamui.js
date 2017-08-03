@@ -1,5 +1,5 @@
 ((state, timeLeftFn) => {
-    var persist = basePersist(state);
+    baseBot(state);
     const turnDirections = ['right', 'left', 'about-face'];
     const turnDirection = turnDirections[Math.floor(Math.random() * 3)];
 
@@ -23,15 +23,18 @@
 
 /***** BASE CODE ******/
 
-var basePersist = (state) => {
-    var persist = state["saved-state"];
-    state["saved-state"] = null;
+var persist;
+var faceX, faceY;
+var arena;
+
+var baseBot = (state) => {
+    persist = state["saved-state"];
     if (persist == null) persist = {};
-    persist.arena = prettyArena(state.arena);
-    persist.myself = getMyState(state.arena);
-    persist.faceX = faceX(persist.myself.contents.orientation);
-    persist.faceY = faceY(persist.myself.contents.orientation);
-    return persist;
+    arena = state.arena;
+    persist.arena = prettyArena(arena);
+    persist.myself = getMyState(arena);
+    faceX = faceX(persist.myself.contents.orientation);
+    faceY = faceY(persist.myself.contents.orientation);
 }
 
 var faceX = (orientation) => {
@@ -71,3 +74,4 @@ var wrapWhiteSpace = (s) => {
     }
     return s;
 }
+
