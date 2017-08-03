@@ -16,8 +16,6 @@
 
     return {
         command,
-        state: {
-            hello: 'world'
-        }
+        state: state
     };
 });
