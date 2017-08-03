@@ -1,19 +1,7 @@
 ((state, timeLeftFn) => {
     baseBot(state);
-    const turnDirections = ['right', 'left', 'about-face'];
-    const turnDirection = turnDirections[Math.floor(Math.random() * 3)];
 
-    const smokeDirections = ['forward', 'backward', 'left', 'right', 'drop'];
-    const smokeDirection = smokeDirections[Math.floor(Math.random() * 5)];
-
-    const index = Math.floor(Math.random() * 17);
-    const command = index < 10 ?
-        { action: 'move', metadata: {} } :
-        index < 12 ?
-            { action: 'turn', metadata: { direction: turnDirection } } :
-            index < 16 ?
-                { action: 'shoot', metadata: {} } :
-                { action: 'smoke', metadata: { direction: smokeDirection } };
+    const command = randomCommand();
 
     return {
         command,
@@ -22,6 +10,10 @@
 });
 
 /***** BASE CODE ******/
+
+const turnDirections = ['right', 'left', 'about-face'];
+const smokeDirections = ['forward', 'backward', 'left', 'right', 'drop'];
+
 
 var persist;
 var faceX, faceY;
@@ -35,6 +27,20 @@ var baseBot = (state) => {
     persist.myself = getMyState(arena);
     faceX = faceX(persist.myself.contents.orientation);
     faceY = faceY(persist.myself.contents.orientation);
+}
+
+var randomCommand = () => {
+    const turnDirection = turnDirections[Math.floor(Math.random() * 3)];
+    const smokeDirection = smokeDirections[Math.floor(Math.random() * 5)];
+    const index = Math.floor(Math.random() * 17);
+    const command = index < 10 ?
+        { action: 'move', metadata: {} } :
+        index < 12 ?
+            { action: 'turn', metadata: { direction: turnDirection } } :
+            index < 16 ?
+                { action: 'shoot', metadata: {} } :
+                { action: 'smoke', metadata: { direction: smokeDirection } };
+    return command;
 }
 
 var faceX = (orientation) => {
