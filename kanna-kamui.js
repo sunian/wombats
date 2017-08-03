@@ -13,7 +13,8 @@
 
 const turnDirections = ['right', 'left', 'about-face'];
 const smokeDirections = ['forward', 'backward', 'left', 'right', 'drop'];
-
+const NORTH = "n", SOUTH = "s", EAST = "e", WEST = "w";
+const MOVE = "move", TURN = "turn", SHOOT = "shoot", SMOKE = "smoke";
 
 var persist;
 var faceX, faceY;
@@ -34,24 +35,24 @@ var randomCommand = () => {
     const smokeDirection = smokeDirections[Math.floor(Math.random() * 5)];
     const index = Math.floor(Math.random() * 17);
     const command = index < 10 ?
-        { action: 'move', metadata: {} } :
+        { action: MOVE, metadata: {} } :
         index < 12 ?
-            { action: 'turn', metadata: { direction: turnDirection } } :
+            { action: TURN, metadata: { direction: turnDirection } } :
             index < 16 ?
-                { action: 'shoot', metadata: {} } :
-                { action: 'smoke', metadata: { direction: smokeDirection } };
+                { action: SHOOT, metadata: {} } :
+                { action: SMOKE, metadata: { direction: smokeDirection } };
     return command;
 }
 
 var faceX = (orientation) => {
-    if (orientation == "w") return -1;
-    if (orientation == "e") return 1;
+    if (orientation == WEST) return -1;
+    if (orientation == EAST) return 1;
     return 0;
 }
 
 var faceY = (orientation) => {
-    if (orientation == "n") return -1;
-    if (orientation == "s") return 1;
+    if (orientation == NORTH) return -1;
+    if (orientation == SOUTH) return 1;
     return 0;
 }
 
